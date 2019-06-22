@@ -1,0 +1,27 @@
+{
+  "name": "example.generator.characters",
+  "version": "1.0.0",
+  "description": "Generate images to use as characters/logos/icons using Liquid Carrot!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liquidcarrot/example.generator.characters.git"
+  },
+  "keywords": [
+    "AI",
+    "LiquidCarrot"
+  ],
+  "author": "@nicszerman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liquidcarrot/example.generator.characters/issues"
+  },
+  "homepage": "https://github.com/liquidcarrot/example.generator.characters#readme",
+  "dependencies": {
+    "jpickle": "^0.4.1",
+    "pixi.js": "^5.0.4"
+  }
+}
