@@ -1,62 +1,89 @@
-// import * as hdf5 from './jsfive/index';
 
-//Create a Pixi Application
-let app = new PIXI.Application({width: 256, height: 256});
-
-//Add the canvas that Pixi automatically created for you to the HTML document
-document.body.appendChild(app.view);
-
-// read the dataset
-// data_url = 'http://localhost:8080/data/LLD-icon/LLD-icon_data_0.npy'
-const data_urls = [
-  'http://localhost:8080/data/LLD-icon/LLD-icon_data_0.npy',
-  'http://localhost:8080/data/LLD-icon/LLD-icon_data_1.npy',
-  'http://localhost:8080/data/LLD-icon/LLD-icon_data_2.npy',
-  'http://localhost:8080/data/LLD-icon/LLD-icon_data_3.npy',
-  'http://localhost:8080/data/LLD-icon/LLD-icon_data_4.npy',
-]
-
-console.log('Started loading data');
-
-let data = [];
-// not a const because it's set to undefined to free memory later
-
-let total_length = 0;
-for (url of data_urls) {
-  NumpyLoader.ajax(url, (loaded_data) => {
-    console.log('Finished loading data');
-    data.push(loaded_data);
-    console.log(loaded_data);
-    total_length += loaded_data.data.length;
-    f();
-  });
+function startApp() {
+  images_dataset.loadImages(onLoad);
 }
 
-const finished_loading = () => {
-  let all_data = new Uint8Array(total_length);
-  let all_data_index = 0;
-  for (each_data of data) {
-    all_data.set(each_data.data, all_data_index);
-    all_data_index += each_data.data.length;
-    console.log('setted data up to ', all_data_index);
-  }
-  // free up the memory
-  data = undefined
+let iteration_counter = new Vue({
+  el: '#iteration-counter',
+  data: {
+    iteration_number: 0,
+  },
+});
 
-  // store the final data
-  window.data = all_data;
-};
+let app = new Vue({
+  el: '#app',
+  data: {
+    loaded: false,
+    previousImage,
+    nextImage,
+    startTraining,
+    generateImage,
+//    dicks: "blue"
+  },
+  /*
+  methods: {
+    changecolor() {
+      this.dicks = "green";
+    }
+  }*/
+});
 
-let counter = 0;
-const f = () => {
-  counter++;
-  if (counter === data_urls.length) {
-    console.log(data);
-    finished_loading();
-  }
+let images_dataset = new ImageDataset();
+
+let drawer_real;
+let drawer_generated;
+let db_index = 0;
+function onLoad() {
+  app.loaded = true;
+
+  console.log('done');
+
+  drawer_real = new Drawer('canvas-real-images');
+  drawer_generated = new Drawer('canvas-generated-images');
+  drawer_real.drawImage(images_dataset.getImage(db_index));
 }
 
+function previousImage() {
+  db_index--;
+  if (db_index < 0) {
+    db_index = images_dataset.getNumberOfImages() - 1;
+  }
+  drawer_real.drawImage(images_dataset.getImage(db_index));
+}
 
+function nextImage() {
+  db_index++;
+  var num_imgs = images_dataset.getNumberOfImages();
+  if (db_index >= num_imgs) {
+    db_index = 0;
+  }
+
+  drawer_real.drawImage(images_dataset.getImage(db_index));
+}
+
+function startTraining() {
+  // generator network:
+  // 10 inputs (random numbers) -> 3072 outputs (32*32*3)
+  // discriminator network:
+  // 3072 inputs -> 1 output (how likely to be real)
+  let generator_network = carrot.Network(10, 3072);
+  let discriminator_network = carrot.Network(3072, 1);
+
+  // generate some images using the random numbers
+  
+
+  // mix them between the real images
+
+  // teach the discriminator network
+
+  // repeat
+}
+
+function generateImage() {
+
+}
+
+startApp();
 
 
 /* Import hdf5 dataset straight up. Probably bad idea though

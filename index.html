@@ -9,9 +9,8 @@
   <meta name="author" content="Liquid Carrot">
 
   <!-- link rel="stylesheet" href="css/styles.css?v=1.0" -->
-
 </head>
-  <script src="imports/pixi.min.js"></script>
+  <!-- script src="imports/pixi.min.js"></script -->
   <script src="imports/numpy-loader.js"></script>
    <!-- <script src="imports/jsfive/index.js"></script> hdf5 reader -->
   <script src="https://liquidcarrot.io/carrot/cdn/0.2.20/carrot.js"></script>
@@ -19,8 +18,35 @@
   <!-- script src="imports/require.js"></script -->
   <!-- numjs -->
   <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
-<body>
-  <script src="./index.js"></script>
 
-</body>
+  <!-- link rel="stylesheet" type="text/css" href="index.css" -->
+<body>
+  <div id="app">
+    <!--
+    <h1 style="color: red">Header</h1>
+    <h1 style="color: red" :style="{ color: dicks }">Other Header</h1>
+    <button type="button" name="button" @click="changecolor">Change Color</button>
+    -->
+    <div v-show="loaded" id="loaded-app">
+      <div id="canvases">
+        <canvas id="canvas-real-images"></canvas>
+        <canvas id="canvas-generated-images"></canvas>
+      </div>
+      <div id="buttons">
+        <button v-on:click="previousImage">Previous image dataset logo</button>
+        <button v-on:click="nextImage">Next image dataset logo</button>
+        <button v-on:click="startTraining">Start training</button>
+        <button v-on:click="generateImage">Generate another image</button>
+      </div>
+      <div id="iteration-counter"><b>Iteration:</b>{{ iteration_number }}</div>
+    </div>
+    <h1 v-show="!loaded">Loading...</h1>
+  </div>
+
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script src="./wrappers.js"></script>
+  <script src="./index.js"></script>
+  </body>
 </html>
