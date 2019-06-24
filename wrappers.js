@@ -90,19 +90,15 @@ class ImageDataset {
   getImage(image_number) {
     const width = this.getImageWidth();
     const height = this.getImageHeight();
-    const bytes_per_image = 4 * width * height;
+    const number_of_pixels = width * height;
+    const bytes_per_image = 4 * number_of_pixels;
     const image_data = new Uint8ClampedArray(bytes_per_image);
 
-    const start_index = image_number * width * height * 3; // inside there's no alpha channel
-    // Iterate through every pixel
-    let inner_image_index = 0;
-    for (let i = 0; i < width * height * 4; i += 4, inner_image_index += 3) {
-      // Modify pixel data
-      image_data[i + 0] = this.dataset[start_index + inner_image_index + 0];  // R value
-      image_data[i + 1] = this.dataset[start_index + inner_image_index + 1];  // G value
-      image_data[i + 2] = this.dataset[start_index + inner_image_index + 2];  // B value
-      image_data[i + 3] = 255;  // A value
-    }
+    const start_index = image_number * number_of_pixels * 3; // inside there's no alpha channel
+
+    // copy from dataset to image data
+    copyWithAlpha(this.dataset, image_data, {start_index, number_of_pixels});
+
     return image_data;
   }
 

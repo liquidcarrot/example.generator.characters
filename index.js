@@ -68,27 +68,54 @@ function nextImage() {
   drawer_real.drawImage(images_dataset.getImage(db_index));
 }
 
+
+// start training creates network and trains them
+let generator_network;
+let discriminator_network;
 function startTraining() {
   // generator network:
   // 10 inputs (random numbers) -> 3072 outputs (32*32*3)
   // discriminator network:
   // 3072 inputs -> 1 output (how likely to be real)
-  let generator_network = carrot.Network(10, 3072);
-  let discriminator_network = carrot.Network(3072, 1);
+  generator_network = new carrot.Network(10, 3072);
+  discriminator_network = new carrot.Network(3072, 1);
 
-  console.log('here');
-  // generate some images using the random numbers
-
+  // generate some images using random numbers
+  let random_generator_input = Array(10);
+  for (let i = 0; i < 10; i++) random_generator_input[i] = Math.random();
+  let generator_out = generator_network.activate(random_generator_input);
 
   // mix them between the real images
 
   // teach the discriminator network
 
   // repeat
+
 }
 
+// generate image generates an image. the networks must have been created before
 function generateImage() {
+  // check that the generator network has been created
+  if (!generator_network) {
+    console.error('The generator network has not been created');
+    return;
+  }
 
+  // generate some images using random numbers
+  let random_generator_input = Array(10);
+  for (let i = 0; i < 10; i++) random_generator_input[i] = Math.random();
+  // for (let i = 0; i < 10; i++) random_generator_input[i] = 0;
+  let generator_out = generator_network.activate(random_generator_input);
+
+  // images have bytes so convert to 0-255
+  generator_out = generator_out.map((val) => Math.round(val*255));
+
+  // prepare image to display
+  const generated_image_ready = new Uint8ClampedArray(generator_out.length / 3 * 4);
+  copyWithAlpha(generator_out, generated_image_ready);
+
+  // draw image
+  drawer_generated.drawImage(generated_image_ready);
 }
 
 startApp();
