@@ -4,7 +4,7 @@ class ImageDataset {
     const root = 'http://localhost:8080/';
     this.data_urls = [
       root + 'data/LLD-icon/LLD-icon_data_0.npy',
-      root + 'data/LLD-icon/LLD-icon_data_1.npy',
+      // root + 'data/LLD-icon/LLD-icon_data_1.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_2.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_3.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_4.npy',
@@ -22,11 +22,13 @@ class ImageDataset {
         console.log(loaded_data);
         data.push(loaded_data);
         total_length += loaded_data.data.length;
-        loaded();
 
+        // to be used by the get[Property] functions
         this.image_width = loaded_data.shape[1];
         this.image_height = loaded_data.shape[2];
         this._image_channels = loaded_data.shape[3];
+
+        loaded();
       });
     }
 
@@ -46,6 +48,7 @@ class ImageDataset {
       callback();
     };
 
+    // just checks if we have downloaded all the datasets requested
     let counter = 0;
     const loaded = () => {
       console.log('Loaded part ', counter);
@@ -76,6 +79,7 @@ class ImageDataset {
     return this._image_channels;
   }
 
+  // returns the number of channels as seen by getImage, not the real number of channels internally
   getImageChannels() {
     return 4;
     // adds alpha

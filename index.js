@@ -43,9 +43,12 @@ function onLoad() {
   // get the two canvases to be able to draw to them
   drawer_real = new Drawer('canvas-real-images');
   drawer_generated = new Drawer('canvas-generated-images');
+
+  // draw an example image into the dataset
   drawer_real.drawImage(images_dataset.getImage(db_index));
 }
 
+// goes to the previous image in the real images canvas
 function previousImage() {
   db_index--;
   if (db_index < 0) {
@@ -54,6 +57,7 @@ function previousImage() {
   drawer_real.drawImage(images_dataset.getImage(db_index));
 }
 
+// goes to the next image in the real images canvas
 function nextImage() {
   db_index++;
   var num_imgs = images_dataset.getNumberOfImages();
@@ -72,6 +76,7 @@ function startTraining() {
   let generator_network = carrot.Network(10, 3072);
   let discriminator_network = carrot.Network(3072, 1);
 
+  console.log('here');
   // generate some images using the random numbers
 
 
