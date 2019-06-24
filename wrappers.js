@@ -1,9 +1,10 @@
 
 class ImageDataset {
   constructor() {
+    const root = 'http://localhost:8080/';
     this.data_urls = [
-      'http://localhost:8080/data/LLD-icon/LLD-icon_data_0.npy',
-      'http://localhost:8080/data/LLD-icon/LLD-icon_data_1.npy',
+      root + 'data/LLD-icon/LLD-icon_data_0.npy',
+      root + 'data/LLD-icon/LLD-icon_data_1.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_2.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_3.npy',
       // 'http://localhost:8080/data/LLD-icon/LLD-icon_data_4.npy',

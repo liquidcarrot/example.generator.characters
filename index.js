@@ -1,43 +1,46 @@
 
 function startApp() {
+  // load the dataset and call onLoad afterward
   images_dataset.loadImages(onLoad);
 }
 
-let iteration_counter = new Vue({
+let iteration_counter_component = new Vue({
   el: '#iteration-counter',
   data: {
     iteration_number: 0,
   },
 });
 
-let app = new Vue({
+let app_component = new Vue({
   el: '#app',
   data: {
     loaded: false,
+    },
+  methods: {
     previousImage,
     nextImage,
     startTraining,
     generateImage,
-//    dicks: "blue"
-  },
-  /*
-  methods: {
-    changecolor() {
+    /*changecolor() {
       this.dicks = "green";
-    }
-  }*/
+    }*/
+  }
 });
 
 let images_dataset = new ImageDataset();
 
+// here we can draw to the canvas
 let drawer_real;
 let drawer_generated;
+
 let db_index = 0;
+// after images have loaded
 function onLoad() {
-  app.loaded = true;
+  app_component.loaded = true;
 
   console.log('done');
 
+  // get the two canvases to be able to draw to them
   drawer_real = new Drawer('canvas-real-images');
   drawer_generated = new Drawer('canvas-generated-images');
   drawer_real.drawImage(images_dataset.getImage(db_index));
@@ -70,7 +73,7 @@ function startTraining() {
   let discriminator_network = carrot.Network(3072, 1);
 
   // generate some images using the random numbers
-  
+
 
   // mix them between the real images
 

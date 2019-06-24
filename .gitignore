@@ -1,5 +1,8 @@
 # dataset
 data/
+# carrot-dist, because in example it should be loaded from cdn and not locally
+carrot-dist/
+
 
 # Logs
 logs

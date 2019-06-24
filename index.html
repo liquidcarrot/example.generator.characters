@@ -12,10 +12,14 @@
 </head>
   <!-- script src="imports/pixi.min.js"></script -->
   <script src="imports/numpy-loader.js"></script>
-   <!-- <script src="imports/jsfive/index.js"></script> hdf5 reader -->
-  <script src="https://liquidcarrot.io/carrot/cdn/0.2.20/carrot.js"></script>
-  <!-- script src="../carrot/src/carrot.js"></script -->
-  <!-- script src="imports/require.js"></script -->
+  <!-- <script src="imports/jsfive/index.js"></script> hdf5 reader -->
+  <!-- Commented scripts
+   <script src="https://liquidcarrot.io/carrot/cdn/0.2.20/carrot.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/liquidcarrot/carrot/src/carrot.js"></script>
+   <script src="imports/require.js"></script>
+  -->
+  <script src="http://localhost:8080/carrot-dist/carrot.js"></script>
+
   <!-- numjs -->
   <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
 
@@ -33,10 +37,10 @@
         <canvas id="canvas-generated-images"></canvas>
       </div>
       <div id="buttons">
-        <button v-on:click="previousImage">Previous image dataset logo</button>
-        <button v-on:click="nextImage">Next image dataset logo</button>
-        <button v-on:click="startTraining">Start training</button>
-        <button v-on:click="generateImage">Generate another image</button>
+        <button @click="previousImage">Previous image dataset logo</button>
+        <button @click="nextImage">Next image dataset logo</button>
+        <button @click="startTraining">Start training</button>
+        <button @click="generateImage">Generate another image</button>
       </div>
       <div id="iteration-counter"><b>Iteration:</b>{{ iteration_number }}</div>
     </div>
